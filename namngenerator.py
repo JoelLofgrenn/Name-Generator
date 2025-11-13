@@ -50,10 +50,24 @@ try:
 except ValueError:
     print(f"Det finns inget namn som börjar på {user_choice} med {user_len} bokstäver")
 
-# Checking if user_char_list has more then 1 item in it and then choosing one random item from the list.   
+# Using random.choice to choose one random name in the list
 if len(user_char_list) >= 1:
-    print(random.choice(user_char_list))
+    chosen_name = random.choice(user_char_list)
 else:
-    print("Inget namn har kunnat genererats, Vänligen starta programmet och skapa ett nytt användarnamn...")
+    print("Inget namn har kunnat genererats, vänligen starta programmet på nytt...")
+    quit()
+
+# Ask if numbers should be added to the username
+add_numbers = input("Vill du lägga till siffror i slutet av namnet? (ja/nej): ").lower()
+
+# If the user choose numbers its take number between 10-999
+if add_numbers in ["ja", "j", "yes", "y"]:
+    chosen_name += str(random.randint(10, 999))
+
+# Skriv ut resultatet
+print("\nDitt genererade användarnamn är:")
+print("→", chosen_name)
+            
+
 
             
