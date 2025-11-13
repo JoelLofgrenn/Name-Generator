@@ -3,9 +3,13 @@ import random
 from time import sleep
 import re
 
-# Open Text file and reads it into the 
-with open('usernames.txt', 'r') as file:
-    usernames = [line.strip() for line in file]
+try:
+    # Open Text file and reads it into the 
+    with open('usernames.txt', 'r') as file:
+        usernames = [line.strip() for line in file]
+except FileNotFoundError:
+    print("Filen 'usernames.txt' hittades inte. Kontrollera att den finns i samma mapp som programmet")
+    quit()
 
 # Items that are important to the code like Lists and counters
 user_len_list = []
@@ -14,13 +18,16 @@ user_char_list = []
 
 user_options_counter = 0
 
-
-# User Question for len of the username
-try:
-    user_len = int(input("Ange Längden på namnet (5, 6, 2) : \t"))
-except ValueError:
-    print("Du måste ange ett Heltal")
-    quit()
+while True:
+    # User Question for len of the username
+    try:
+        user_len = int(input("Ange Längden på namnet (5, 6, 2) : \t"))
+        if user_len <= 0:
+            print("Längden måste vara större än 0")
+            continue
+        break
+    except ValueError:
+        print("Du måste ange ett Heltal")
 
 # For loop to check the txt file if there are usernames that matches the lengh of the user question
 for i in usernames:
@@ -35,8 +42,14 @@ if len(user_len_list) == 0:
 else:
     print("Vänligen Vänta...")
 
-# User question for what char the username should start with
-user_choice = input("Ange vilken bokstav namnet ska börja på (t.ex. A) :\t ").lower()
+try:
+    # User question for what char the username should start with
+    user_choice = input("Ange vilken bokstav namnet ska börja på (t.ex. A) :\t ").lower()
+    if len(user_choice) > 1:
+        print("Du ska bara skriva en bokstav i taget!")
+except ValueError:
+    print("Något har gått snett, vänligen kör programmet igen...")
+    quit()
 
 # Checking if the user has entered null as answer and then making no filter otherwise it check the user_len_list if matches with user choices
 try:
@@ -64,10 +77,6 @@ add_numbers = input("Vill du lägga till siffror i slutet av namnet? (ja/nej): "
 if add_numbers in ["ja", "j", "yes", "y"]:
     chosen_name += str(random.randint(10, 999))
 
-# Skriv ut resultatet
-print("\nDitt genererade användarnamn är:")
-print("→", chosen_name)
-            
-
-
+# Prints The Results
+print("\nDitt genererade användarnamn är:", chosen_name)
             
